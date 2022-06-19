@@ -16,6 +16,7 @@ importers:
       minimatch: ^5.1.0
       mockjs: ^1.1.0
       qs: ^6.10.5
+      store2: ^2.13.2
       typescript: ^4.5.4
       vite: ^2.9.9
       vite-plugin-mock: ^2.9.6
@@ -27,6 +28,7 @@ importers:
       keyv: 4.3.0
       lodash-es: 4.17.21
       qs: 6.10.5
+      store2: 2.13.2
       vue: 3.2.37
     devDependencies:
       '@faker-js/faker': 7.2.0
@@ -991,6 +993,10 @@ packages:
     resolution: {integrity: sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==}
     engines: {node: '>= 0.6'}
     dev: true
+
+  /store2/2.13.2:
+    resolution: {integrity: sha512-CMtO2Uneg3SAz/d6fZ/6qbqqQHi2ynq6/KzMD/26gTkiEShCcpqFfTHgOxsE0egAq6SX3FmN4CeSqn8BzXQkJg==}
+    dev: false
 
   /supports-color/7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}

@@ -9,7 +9,7 @@ export interface ProductCategory extends BaseApiQuery {
   seo: SEO
 }
 
-export const productCategorys = createFakerArray<ProductCategory>("ProductCategory", ({ faker, nowDate, i }) => {
+export const createProductCategory = () => createFakerArray<ProductCategory>("ProductCategory", ({ faker, nowDate, i }) => {
   const name = faker.commerce.productMaterial()
   const description = faker.commerce.productDescription()
   

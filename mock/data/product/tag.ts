@@ -4,6 +4,6 @@ export interface ProductTag extends BaseApiQuery {
   name: string
 }
 
-export const productTags = createFakerArray<ProductTag>("ProductTag", ({ faker }) => ({
+export const createProductTag = () => createFakerArray<ProductTag>("ProductTag", ({ faker }) => ({
   name: faker.commerce.productAdjective()
 }))

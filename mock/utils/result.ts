@@ -53,24 +53,35 @@ function request(baseUrl: string) {
   }
 }
 
+interface RestfulOption<T> {
+  baseUrl: string
+  created: () => T[]
+}
+
 /**
  * @description restful封装
  * @export
  * @template T
- * @param {string} baseUrl
- * @param {T[]} data
+ * @param {string} storeKey
+ * @param {RestfulOption} options
+ * @returns
  */
-export function restful<T extends Recordable = Recordable>(baseUrl: string, data: T[]) {
+export function restful<T extends Recordable = Recordable>(storeKey: string, options: RestfulOption<T>) {
+  const { baseUrl, created } = options
   const http = request(baseUrl)
 
   const list = () => {
     return http.get('list', ({ query }) => {
+      const data = created()
+
       return withList(query, data)
     })
   }
 
   const gets = () => {
     return http.get('get', ({ query }) => {
+      const data = created()
+
       if (!hasIn(query, 'ids')) return []
       return withList(query, data, true)
     })
@@ -78,12 +89,16 @@ export function restful<T extends Recordable = Recordable>(baseUrl: string, data
 
   const find = () => {
     return http.get(':id', ({ query }) => {
+      const data = created()
+
       return data.find(item => item.id === Number(query.id))
     })
   }
 
   const add = () => {
     return http.post('', ({ headers, body }) => {
+      const data = created()
+
       const query = {
         id: Random.integer(10, 10000),
         createDate: Random.now('day', 'yyyy-MM-dd HH:mm:ss'),
@@ -98,6 +113,8 @@ export function restful<T extends Recordable = Recordable>(baseUrl: string, data
 
   const update = () => {
     return http.put(':id', ({ query, body }) => {
+      const data = created()
+
       const params = { id: Number(query.id), ...body }
 
       const index = data.findIndex(item => item.id === Number(params.id))
@@ -109,6 +126,8 @@ export function restful<T extends Recordable = Recordable>(baseUrl: string, data
 
   const remove = () => {
     return http.delete(':id', ({ query }) => {
+      const data = created()
+
       const index = data.findIndex(item => item.id === Number(query.id))
       data.splice(index, 1)
       return {}

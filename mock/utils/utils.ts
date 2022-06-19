@@ -112,7 +112,15 @@ export function fakerArray<T>(hook: (item: FakerItem) => T, number?: number | [n
  * @param {(number | [number, number])} [number]
  * @return {*}  {T[]}
  */
-export function createFakerArray<T extends BaseApiQuery = BaseApiQuery>(name: string, hook: (item: FakerItem) => Omit<T, keyof BaseApiQuery>, number?: number | [number, number]): T[] {
+export function createFakerArray<T extends BaseApiQuery = BaseApiQuery>(
+  name: string,
+  hook: (item: FakerItem) => Omit<T, keyof BaseApiQuery>,
+  number?: number | [number, number]
+): T[] {
+  const cache = global.store.get(name);
+  console.log("name :>> ", name, global.store.has(name));
+  if (global.store.has(name) && cache) return cache;
+
   const data = fakerArray<T>((item) => {
     return {
       id: item.i + 1,
@@ -122,8 +130,8 @@ export function createFakerArray<T extends BaseApiQuery = BaseApiQuery>(name: st
     } as T;
   }, number);
 
-  // createMockDataCache<T>(name, data)
+  global.store.set(name, data);
 
-  return data
+  return data;
 }
 

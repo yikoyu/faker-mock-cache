@@ -1,6 +1,6 @@
 import type { SEO } from "@mock/types/seo";
-import { ProductTag, productTags } from "./tag";
-import { ProductCategory, productCategorys } from "./category";
+import { ProductTag, createProductTag } from "./tag";
+import { ProductCategory, createProductCategory } from "./category";
 import { createFakerArray } from "@mock/utils/utils";
 
 export interface ProductProduct extends BaseApiQuery {
@@ -39,27 +39,32 @@ This is short description
 <p>All these <strong>cool tags</strong> are working now.</p>
 `;
 
-export const productProducts = createFakerArray<ProductProduct>("ProductProduct", ({ faker, nowDate, i }) => {
-  const name = faker.commerce.productMaterial();
-  const productDescription = faker.commerce.productDescription();
+export const createProductProduct = () => {
+  const productCategorys = createProductCategory()
+  const productTag = createProductTag()
 
-  return {
-    name,
-    referencePrice: Number(faker.commerce.price()),
-    shortDescription: productDescription,
-    description,
-    shelves: faker.datatype.boolean(),
-    shelvesDate: nowDate,
-    sort: 0,
-    seo: {
-      id: i + 1,
-      createDate: nowDate,
-      title: name,
+  return createFakerArray<ProductProduct>("ProductProduct", ({ faker, nowDate, i }) => {
+    const name = faker.commerce.productMaterial();
+    const productDescription = faker.commerce.productDescription();
+
+    return {
+      name,
+      referencePrice: Number(faker.commerce.price()),
+      shortDescription: productDescription,
       description,
-      keywords: [faker.commerce.productMaterial(), faker.commerce.productMaterial()].join(","),
-    },
-    productCategory: faker.helpers.arrayElement(productCategorys),
-    productTag: faker.helpers.arrayElements(productTags),
-  };
-});
+      shelves: faker.datatype.boolean(),
+      shelvesDate: nowDate,
+      sort: 0,
+      seo: {
+        id: i + 1,
+        createDate: nowDate,
+        title: name,
+        description,
+        keywords: [faker.commerce.productMaterial(), faker.commerce.productMaterial()].join(","),
+      },
+      productCategory: faker.helpers.arrayElement(productCategorys),
+      productTag: faker.helpers.arrayElements(productTag),
+    };
+  });
+}
 
